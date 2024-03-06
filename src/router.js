@@ -19,6 +19,11 @@ const routes = [
         component: () => import('./views/PotionsPage.vue'),
     },
     {
+        path: '/potions/:id',
+        component: () => import('./views/PotionDetailPage.vue'),
+        props: true
+    },
+    {
         path: '/sorts',
         component: () => import('./views/SpellsPage.vue'),
     },

@@ -4,7 +4,10 @@
 
 <template>
     <nav class="navbar">
-      <router-link to="/" class="navbar-brand">Encyclopédie Harry Potter</router-link>
+      <div class="titre">
+        <router-link to="/" class="navbar-brand">EncyPotter</router-link>
+        <p>La seule encyclopédie sur Harry Potter ! (pas la peine de vérifier c'est vrai !)</p>
+      </div>
       <ul class="navbar-nav">
         <li class="nav-item">
           <router-link to="/" class="nav-link">Accueil</router-link>
@@ -27,41 +30,41 @@
 </template>
 
 <style scoped>
-/* navbar */
+.titre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
 .navbar {
-  background-color: #333; /* Couleur de fond */
-  padding: 10px; /* Espacement interne */
+  background-color: #333;
+  padding: 10px;
+  border-radius : 15px;
+  color: white;
+  font-family: Montserrat, sans-serif;
+
 }
 
-/* lien de la marque */
 .navbar-brand {
-  color: white; /* Couleur du texte */
-  font-size: 1.5em; /* Taille de la police */
-  text-decoration: none; /* Supprimer la soulignement */
+  font-size: 1.5em;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-/* liste de navigation */
 .navbar-nav {
-  list-style-type: none; /* Supprimer les puces de liste */
-  padding: 0; /* Supprimer le remplissage de la liste */
-  margin: 0; /* Supprimer les marges de la liste */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* éléments de navigation */
 .nav-item {
-  display: inline-block; /* Afficher les éléments en ligne */
-  margin-right: 10px; /* Marge à droite entre les éléments */
+  display: inline-block;
+  margin-right: 10px;
 }
 
-/* style des liens */
 .nav-link {
-  color: white; /* Couleur du texte */
-  text-decoration: none; /* Supprimer la soulignement */
-}
-
-/* style des liens actifs */
-.nav-link.active {
-  font-weight: bold; /* Texte en gras */
+  text-decoration: none;
 }
 
 </style>
