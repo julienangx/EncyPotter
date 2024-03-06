@@ -6,14 +6,16 @@
       <p class="text title">🐾 Race:</p>
       <span>{{ character.species }}</span>
       <p class="text title">⚤ Genre:</p>
-      <span>{{ character.gender || 'Non spécifiée' }}</span>
+      <span>{{ character.gender || 'Non spécifié' }}</span>
       <p class="text title">🎂 Date de naissance:</p>
-      <span>{{ character.born || 'Non spécifiée' }}</span>
+      <span>{{ character.born || 'Non spécifié' }}</span>
       <p class="text title">🏠 Maison à Poudlard:</p>
       <span>{{ character.house || 'Pas de maison' }}</span>
       <p class="text title">💼 Métiers:</p>
-      <span>{{ character.jobs || 'Inconnu' }}</span>
-      <a :href="character.wiki" target="_blank">➡️ En savoir +</a>
+      <span>{{ character.jobs.join(', ') || 'Inconnu' }}</span>
+      <p class="text title">🔍 Biographie:</p>
+      <span v-html="generateBiography(character)"></span>
+      <a :href="character.wiki" target="_blank">➡️ En savoir + (WIKI)</a>
     </div>
   </div>
 </template>
@@ -24,6 +26,66 @@ export default {
     character: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    generateBiography(character) {
+      let pronom = '';
+      let biography = '';
+      const isMale = character.gender && character.gender.toLowerCase() === 'male';
+      const isFemale = character.gender && character.gender.toLowerCase() === 'female';
+
+      if (isMale) {
+        pronom += 'Il ';
+      } else if (isFemale) {
+        pronom += 'Elle ';
+      } else {
+        pronom += 'La personne ';
+      }
+
+      if (character.alias_names && character.alias_names.length > 0) {
+        biography += `${pronom} est connu(e) sous les noms : <b>${character.alias_names.slice(0, 5).join(', ')}</b>. `;
+      }
+      if (character.blood_status) {
+        biography += `${pronom} a un statut de sang <b>${character.blood_status}</b>. `;
+      }
+      if (character.born) {
+        biography += `${pronom} est né(e) le <b>${character.born}</b>. `;
+      }
+      if (character.died) {
+        biography += `${pronom} est décédé(e) le <b>${character.died}</b>. `;
+      }
+      if (character.family_member && character.family_member.length > 0) {
+        biography += `${pronom} possède comme membre(s) de sa famille : <b>${character.family_member.slice(0, 5).join(', ')}</b>. `;
+      }
+      if (character.gender) {
+        biography += `${pronom} est de genre <b>${character.gender}</b>. `;
+      }
+      if (character.house) {
+        biography += `${pronom} était dans la maison <b>${character.house}</b> à Poudlard. `;
+      }
+      if (character.jobs && character.jobs.length > 0) {
+        biography += `${pronom} a travaillé comme <b>${character.jobs.slice(0, 5).join(', ')}</b>. `;
+      }
+      if (character.nationality) {
+        biography += `${pronom} est de nationalité <b>${character.nationality}</b>. `;
+      }
+      if (character.patronus) {
+        biography += `Son Patronus est <b>${character.patronus}</b>. `;
+      }
+      if (character.romances && character.romances.length > 0) {
+        biography += `Relations amoureuses : <b>${character.romances.slice(0, 5).join(', ')}</b>. `;
+      }
+      if (character.species) {
+        biography += `${pronom} appartient à l'espèce <b>${character.species}</b>. `;
+      }
+      if (character.titles && character.titles.length > 0) {
+        biography += `${pronom} a été connu(e) sous le(s) titre(s) : <b>${character.titles.slice(0, 5).join(', ')}</b>. `;
+      }
+      if (character.wand && character.wand.length > 0) {
+        biography += `Sa baguette magique est <b>${character.wand.slice(0, 5).join(', ')}</b>. `;
+      }
+      return biography;
     }
   }
 };

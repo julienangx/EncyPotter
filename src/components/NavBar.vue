@@ -5,7 +5,7 @@
 <template>
     <nav class="navbar">
       <div class="titre">
-        <router-link to="/" class="navbar-brand">EncyPotter</router-link>
+        <img class="logo" src="../assets/logo.png">
         <p>La seule encyclopédie sur Harry Potter ! (pas la peine de vérifier c'est vrai !)</p>
       </div>
       <ul class="navbar-nav">
@@ -38,7 +38,7 @@
 }
 
 .navbar {
-  background-color: #333;
+  background-color: #1f1f1f;
   padding: 10px;
   border-radius : 15px;
   color: white;
@@ -65,6 +65,14 @@
 
 .nav-link {
   text-decoration: none;
+}
+
+.nav-link:visited {
+  color: white;
+}
+
+.logo{
+  width: 10%;
 }
 
 </style>

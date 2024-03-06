@@ -13,7 +13,7 @@
       <span>{{ book.summary || 'Non spécifiée' }}</span>
       <p class="text title">🤙 Dédicace:</p>
       <span>{{ book.dedication || 'Non spécifié' }}</span>
-      <a :href="book.wiki" target="_blank">➡️ En savoir +</a>
+      <a :href="book.wiki" target="_blank">➡️ En savoir + (WIKI)</a>
     </div>
   </div>
 </template>

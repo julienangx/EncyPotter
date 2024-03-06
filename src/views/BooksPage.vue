@@ -7,11 +7,18 @@
     </div>
     <div v-if="loading">Chargement...</div>
     <div class="container-cartes" v-else>
-      <div v-for="book in displayedBooks" :key="book.id">
+      <div v-for="book in books" :key="book.id">
         <BookCard :book="book.attributes" />
       </div>
     </div>
-    <Pagination :totalPages="totalPages" @pageChange="handlePageChange" />
+    <pagination
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        :prevPage="prevPage"
+        :nextPage="nextPage"
+        :first-page="firstPage"
+        :last-page="lastPage"
+    />
   </div>
 </template>
 
@@ -33,43 +40,73 @@ export default {
       books: [],
       loading: false,
       currentPage: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 0,
       searchQuery: ''
     }
   },
-  computed: {
-    displayedBooks() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.filteredBooks.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.filteredBooks.length / this.itemsPerPage);
-    },
-    filteredBooks() {
-      return this.books.filter(book => book.attributes.title && book.attributes.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
-    }
-  },
   mounted() {
-    this.loading = true;
-    axios.get('https://api.potterdb.com/v1/books')
-        .then(response => {
-          if (response.data && Array.isArray(response.data.data)) {
-            this.books = response.data.data;
-          } else {
-            console.error('Invalid response data:', response.data);
-          }
-          this.loading = false;
-        })
-        .catch(error => {
-          console.error('Error fetching books:', error);
-          this.loading = false;
-        });
+    this.fetchBooks();
   },
   methods: {
-    handlePageChange(pageNumber) {
-      this.currentPage = pageNumber;
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.fetchBooks();
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.fetchBooks();
+      }
+    },
+    firstPage() {
+      this.currentPage = 1;
+      this.fetchBooks();
+    },
+    lastPage() {
+      this.currentPage = this.totalPages;
+      this.fetchBooks();
+    },
+    fetchBooks() {
+      this.loading = true;
+      let url = `https://api.potterdb.com/v1/books?page[number]=${this.currentPage}`;
+
+      if (this.searchQuery) {
+        url += `&filter[name_cont]=${this.searchQuery}`;
+      }
+
+      axios.get(url)
+          .then(response => {
+            if (response.data && response.data.meta && response.data.meta.pagination) {
+              this.totalPages = response.data.meta.pagination.last;
+              if (isNaN(this.totalPages))
+              {
+                this.totalPages = this.currentPage;
+              }
+            } else {
+              console.error('Invalid response data:', response.data);
+            }
+
+            if (response.data && Array.isArray(response.data.data)) {
+              this.books = response.data.data;
+            } else {
+              console.error('Invalid response data:', response.data);
+            }
+
+            this.loading = false;
+          })
+          .catch(error => {
+            console.error('Error fetching books:', error);
+            this.loading = false;
+          });
     }
+  },
+  watch: {
+    searchQuery() {
+      this.currentPage = 1;
+      this.fetchBooks();
+    },
   }
 }
 </script>

@@ -13,7 +13,9 @@
       <span>{{ spell.incantation || 'Non spécifiée' }}</span>
       <p class="text title">📝 Attribut:</p>
       <span>{{ spell.light || 'Non spécifié' }}</span>
-      <a :href="spell.wiki" target="_blank">➡️ En savoir +</a>
+      <p class="text title">📖 Description:</p>
+      <span v-html="generateDescription(spell)"></span>
+      <a :href="spell.wiki" target="_blank">➡️ En savoir + (WIKI)</a>
     </div>
   </div>
 </template>
@@ -24,6 +26,27 @@ export default {
     spell: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    generateDescription(spell) {
+      let description = `Le sort "${spell.name}" est un sort de la catégorie "${spell.category}" qui a pour effet "${spell.effect}". `;
+      if (spell.creator) {
+        description += `Il a été créé par ${spell.creator}. `;
+      } else {
+        description += `Son créateur est inconnu. `;
+      }
+      if (spell.incantation) {
+        description += `Pour le lancer, vous devez prononcer l'incantation "${spell.incantation}". `;
+      } else {
+        description += `Cependant, son incantation est inconnue. `;
+      }
+      if (spell.light) {
+        description += `Lorsque ce sort est utilisé, il produit une lumière de type "${spell.light}". `;
+      } else {
+        description += `Lorsque ce sort est utilisé, son effet lumineux est inconnu. `;
+      }
+      return description;
     }
   }
 };

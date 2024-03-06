@@ -7,11 +7,18 @@
     </div>
     <div v-if="loading">Chargement...</div>
     <div class="container-cartes" v-else>
-      <div  v-for="spell in displayedSpells" :key="spell.id">
+      <div  v-for="spell in spells" :key="spell.id">
         <SpellCard :spell="spell.attributes" />
       </div>
     </div>
-    <Pagination :totalPages="totalPages" @pageChange="handlePageChange" />
+    <pagination
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        :prevPage="prevPage"
+        :nextPage="nextPage"
+        :first-page="firstPage"
+        :last-page="lastPage"
+    />
   </div>
 </template>
 
@@ -37,39 +44,69 @@ export default {
       searchQuery: ''
     }
   },
-  computed: {
-    displayedSpells() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.filteredSpells.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.filteredSpells.length / this.itemsPerPage);
-    },
-    filteredSpells() {
-      return this.spells.filter(spell => spell.attributes.name && spell.attributes.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
-    }
-  },
   mounted() {
-    this.loading = true;
-    axios.get('https://api.potterdb.com/v1/spells')
-        .then(response => {
-          if (response.data && Array.isArray(response.data.data)) {
-            this.spells = response.data.data;
-          } else {
-            console.error('Invalid response data:', response.data);
-          }
-          this.loading = false;
-        })
-        .catch(error => {
-          console.error('Error fetching spells:', error);
-          this.loading = false;
-        });
+    this.fetchSpells();
   },
   methods: {
-    handlePageChange(pageNumber) {
-      this.currentPage = pageNumber;
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.fetchSpells();
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.fetchSpells();
+      }
+    },
+    firstPage() {
+      this.currentPage = 1;
+      this.fetchSpells();
+    },
+    lastPage() {
+      this.currentPage = this.totalPages;
+      this.fetchSpells();
+    },
+    fetchSpells() {
+      this.loading = true;
+      let url = `https://api.potterdb.com/v1/spells?page[number]=${this.currentPage}`;
+
+      if (this.searchQuery) {
+        url += `&filter[name_cont]=${this.searchQuery}`;
+      }
+
+      axios.get(url)
+          .then(response => {
+            if (response.data && response.data.meta && response.data.meta.pagination) {
+              this.totalPages = response.data.meta.pagination.last;
+              if (isNaN(this.totalPages))
+              {
+                this.totalPages = this.currentPage;
+              }
+            } else {
+              console.error('Invalid response data:', response.data);
+            }
+
+            if (response.data && Array.isArray(response.data.data)) {
+              this.spells = response.data.data;
+            } else {
+              console.error('Invalid response data:', response.data);
+            }
+
+            this.loading = false;
+          })
+          .catch(error => {
+            console.error('Error fetching spells:', error);
+            this.loading = false;
+          });
     }
+  },
+  watch: {
+    searchQuery() {
+      this.currentPage = 1;
+      this.fetchSpells();
+    },
   }
 }
 </script>
