@@ -1,14 +1,17 @@
 <template>
   <NavBar />
-  <h1>Bienvenue sur EncyPotter !</h1>
-  <div>
-    <h3>Découvrez nos différentes sections :</h3>
-    <ul>
-      <li><router-link to="/potions">Potions</router-link></li>
-      <li><router-link to="/sorts">Sorts</router-link></li>
-      <li><router-link to="/livres">Livres</router-link></li>
-      <li><router-link to="/personnages">Personnages</router-link></li>
-    </ul>
+  <div class="container">
+
+    <h1>Bienvenue sur EncyPotter !</h1>
+    <div>
+      <h3>Découvrez nos différentes sections :</h3>
+      <ul>
+        <li><router-link to="/potions">Potions</router-link></li>
+        <li><router-link to="/sorts">Sorts</router-link></li>
+        <li><router-link to="/livres">Livres</router-link></li>
+        <li><router-link to="/personnages">Personnages</router-link></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -23,15 +26,28 @@ export default {
 }
 </script>
 
+
 <style scoped>
+.container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police de caractères */
+  display: flex; /* Utilise Flexbox pour centrer les éléments */
+  flex-direction: column; /* Aligne les éléments verticalement */
+  align-items: center; /* Centre les éléments horizontalement */
+  justify-content: center; /* Centre les éléments verticalement */
+  margin-top: 150px;
+  margin-left: 20px;
+}
+
 h1 {
   text-align: center;
   margin-top: 40px;
+  font-size: 36px;
 }
 
 h3 {
   margin: 40px 0 20px;
   text-align: center;
+  font-size: 24px;
 }
 
 ul {
@@ -41,18 +57,21 @@ ul {
 }
 
 li {
+  font-size: 18px;
+  padding: 10px 20px;
   display: inline-block;
   margin: 0 10px;
 }
 
 a {
-  color: #42b983;
+  color: #ff9696;
   text-decoration: none;
   font-weight: bold;
+  transition: text-shadow 0.3s ease; /* Ajoute une transition pour une animation fluide */
 }
 
 a:hover {
   text-decoration: underline;
+  text-shadow: 0 0 20px #ff9696; /* Ajoute une lumière au survol */
 }
 </style>
-
