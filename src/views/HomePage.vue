@@ -28,8 +28,8 @@ export default {
 
 
 <style scoped>
+@import url('../assets/police.css');
 .container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police de caractères */
   display: flex; /* Utilise Flexbox pour centrer les éléments */
   flex-direction: column; /* Aligne les éléments verticalement */
   align-items: center; /* Centre les éléments horizontalement */
@@ -64,7 +64,7 @@ li {
 }
 
 a {
-  color: #ff9696;
+  color: #8700e1;
   text-decoration: none;
   font-weight: bold;
   transition: text-shadow 0.3s ease; /* Ajoute une transition pour une animation fluide */
@@ -72,6 +72,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-  text-shadow: 0 0 20px #ff9696; /* Ajoute une lumière au survol */
+  text-shadow: 0 0 40px #c300e1; /* Ajoute une lumière au survol */
 }
 </style>

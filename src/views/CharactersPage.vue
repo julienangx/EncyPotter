@@ -112,6 +112,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('../assets/police.css');
 .container-cartes {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -127,7 +128,6 @@ export default {
   margin-bottom: 20px;
   background-color: #191919;
   color: #ffffff;
-  font-family: 'Montserrat', sans-serif;
   font-size: 15px;
   font-weight: 800;
 }

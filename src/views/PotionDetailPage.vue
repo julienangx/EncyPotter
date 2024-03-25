@@ -60,6 +60,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('../assets/police.css');
 .card {
   width: 100%;
   height: 100%;
@@ -85,7 +86,6 @@ export default {
   transition: 0.2s ease-in-out;
   z-index: 2;
   backdrop-filter: blur(10px) brightness(0.8);
-  font-family: Montserrat, sans-serif;
 
 }
 
@@ -132,7 +132,6 @@ export default {
   height: 50px;
   font-size: 25px;
   font-weight: 900;
-  font-family: Montserrat, sans-serif;
   align-self: flex-end;
 }
 </style>

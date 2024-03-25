@@ -41,15 +41,17 @@ export default {
 </script>
 
 <style scoped>
+
+@import url('../assets/police.css');
+
 .paginate-controls {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  font-family: Montserrat, sans-serif;
 }
 
 .prev-btn, .next-btn {
-  background-color: #777777;
+  background-color: #26003b;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -59,17 +61,16 @@ export default {
   width: 200px;
   height: 50px;
   margin: 0 5px;
-  font-family: Montserrat, sans-serif;
   font-weight: 400;
 }
 
 .prev-btn:hover, .next-btn:hover {
-  background-color: #444d4d;
+  background-color: #26003b;
   font-weight: 800;
 }
 
 .prev-btn:disabled, .next-btn:disabled {
-  background-color: #ccc;
+  background-color: #26003b;
   cursor: not-allowed;
 }
 </style>

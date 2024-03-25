@@ -30,6 +30,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('../assets/police.css');
 .card {
   min-width: 50%;
   width: 90%;
