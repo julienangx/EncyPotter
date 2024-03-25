@@ -1,0 +1,8 @@
+<!-- @font-face {
+    font-family: 'Luxurious Roman';
+    src: url('LuxuriousRoman-Regular.ttf') format('truetype');
+}-->
+
+body {
+    font-family: 'Luxurious Roman', serif; /* Fallback to generic serif font */
+}
